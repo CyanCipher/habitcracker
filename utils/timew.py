@@ -1,6 +1,6 @@
+import re
 import subprocess
 from typing import Tuple, List, TypeAlias
-import re
 
 
 TagT: TypeAlias = str | None

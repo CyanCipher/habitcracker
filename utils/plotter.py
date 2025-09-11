@@ -16,8 +16,8 @@ class Plotter:
             return None
 
         for chunk in data:
-            start, stop = datetime.strptime(
-                chunk[2], '%H:%M:%S'), datetime.strptime(chunk[3], '%H:%M:%S')
+            start, stop = datetime.strptime(chunk[2], '%H:%M:%S'), \
+                datetime.strptime(chunk[3], '%H:%M:%S')
             diff = stop - start
             minutes = diff.seconds//60
             if minutes >= 10:
@@ -32,7 +32,7 @@ class Plotter:
         for tag, data in dataset.items():
             try:
                 heights, data = self.parse_data(data)
-            except:
+            except ValueError:
                 heights, data = [], []
             ax.bar(data, height=heights, label=tag)
         ax.set_title('Time Tracker')

@@ -1,6 +1,6 @@
-from timew import Timew
-from database import DataBase
-from plotter import Plotter
+from utils.timew import Timew
+from utils.database import DataBase
+from utils.plotter import Plotter
 from datetime import datetime
 
 

@@ -9,7 +9,7 @@ def today():
 class DataBase:
 
     def __init__(self):
-        self.db = sqlite3.connect('habits.db')
+        self.db = sqlite3.connect('DB/habits.db')
         self.cursor = self.db.cursor()
         self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS timelog (

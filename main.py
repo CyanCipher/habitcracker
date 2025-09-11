@@ -39,21 +39,18 @@ class HabitTracker:
         dataset = {}
         tags = self.get_tags()
         for tag in tags:
-            data_list = self.db.get_queries(tag=tag, date='25-09-11')
+            data_list = self.db.get_queries(tag=tag)
             data_list = sorted(data_list, key=lambda x: datetime.strptime(x[2], '%H:%M:%S'))
-            # for data in data_list:
-            #    self.plt.gen_graph(data, data[1])
             dataset[tag] = data_list
         self.plt.gen_graph(dataset)
-        print(dataset)
 
 
 def main():
     ht = HabitTracker()
     while True:
-        usr_choice = input('Display Data(D) | Update Data(U) | Generate Graph(G): ')
+        usr_choice = input('Display Data(D) | Update Data(U) | Generate Graph(G) | Or EXIT: ').lower()
         if usr_choice == 'd':
-            for line in ht.get_queries(date='25-09-11'):
+            for line in ht.get_queries():
                 print(line)
 
         if usr_choice == 'u':
@@ -61,6 +58,9 @@ def main():
 
         if usr_choice == 'g':
             ht.plot_data()
+
+        if usr_choice == 'exit':
+            break
 
 
 if __name__ == "__main__":

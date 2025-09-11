@@ -8,6 +8,9 @@ This tool leverages the [timew](https://github.com/GothenburgBitFactory/timewarr
 
 It simply talks to the timew in the backend and puts that data into a database and displays the data to you in a 2d plotted graph([matplotlib](https://github.com/matplotlib/matplotlib)).
 
+#### Screenshots:
+![A sample plot](./assets/temp.png)
+
 ### Install
 
 #### Prerequisits

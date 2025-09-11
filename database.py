@@ -20,11 +20,17 @@ class DataBase:
                     total TEXT)
             ''')
 
-    def get_queries(self, date=None):
+    def get_queries(self, tag=None, date=None):
         if not date:
             date = today()
 
-        self.cursor.execute("SELECT * FROM timelog WHERE date = ?", (date,))
+        if not tag:
+            self.cursor.execute(
+                "SELECT * FROM timelog WHERE date = ?", (date,))
+            return self.cursor.fetchall()
+
+        self.cursor.execute(
+            'SELECT * FROM timelog WHERE date = ? AND tag = ?', (date, tag))
         return self.cursor.fetchall()
 
     def parse_data(self, data):
@@ -56,3 +62,8 @@ class DataBase:
         if entries:
             return entries[-1]
         return None
+
+    def get_tags(self):
+        self.cursor.execute('SELECT tag FROM timelog')
+        tags = set(self.cursor.fetchall())
+        return [tag_tuple[0] for tag_tuple in tags]

@@ -1,6 +1,6 @@
 # Habit Cracker
 
-A simple tool to track and manager your habits, make new ones and possibly eliminate old and bad ones.
+A simple tool to track and manage your habits, make new ones and possibly eliminate old and bad ones.
 
 This tool leverages the [timew](https://github.com/GothenburgBitFactory/timewarrior) tool, which is the real brain and motivator behind this project(got to know about it while watching vimmer Timothee Chalamet, thanks), it helps you manage your projects or anything for that sake and keep track of how much time you spend doing a particular thing.
 

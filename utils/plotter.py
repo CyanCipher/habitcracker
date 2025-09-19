@@ -8,7 +8,7 @@ class Plotter:
     def __init__(self):
         pass
 
-    def parse_data(self, data: List[Tuple]) -> Tuple[List[int], List[str]] | None:
+    def parse_data(self, data: List[Tuple]) -> Tuple[List[float], List[str]] | None:
         heights = []
         timestamps = []
 
@@ -20,8 +20,9 @@ class Plotter:
                 datetime.strptime(chunk[3], '%H:%M:%S')
             diff = stop - start
             minutes = diff.seconds//60
-            if minutes >= 10:
-                heights.append(minutes)
+            hours = minutes//60 + round((minutes % 60)/100, 2)
+            if hours >= 0.2:
+                heights.append(hours)
                 timestamps.append(start.strftime('%H:%M'))
 
         return (heights, timestamps)
@@ -36,6 +37,6 @@ class Plotter:
                 heights, data = [], []
             ax.bar(data, height=heights, label=tag)
         ax.set_title('Time Tracker')
-        ax.set_ylabel('Duration')
+        ax.set_ylabel('Duration in hours')
         ax.legend()
         plt.savefig('temp.png')

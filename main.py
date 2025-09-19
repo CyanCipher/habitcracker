@@ -1,54 +1,16 @@
-from utils.timew import Timew
-from utils.database import DataBase
-from utils.plotter import Plotter
-from datetime import datetime
+# Author: Cyan Cipher
+# Date: Sep 02 2025
+# License: CLL
 
-
-class HabitTracker:
-    def __init__(self):
-        self.timew = Timew()
-        self.db = DataBase()
-        self.plt = Plotter()
-        self.colors = ['lightgreen', 'lightblue', 'blue', 'red', 'black']
-
-    def today(self):
-        return datetime.now().strftime("%y-%m-%d")
-
-    def update(self):
-        data = self.timew.get_data()
-        last_entry = self.db.get_last_query()
-
-        if not last_entry:
-            self.db.update(data)
-            return
-
-        if last_entry[0] == self.today():
-            if last_entry[1:] in data:
-                if data[-1] == last_entry[1:]:
-                    return
-                self.db.update(data[data.index(last_entry[1:])+1:])
-                return
-
-    def get_queries(self, tag=None, date=None):
-        return self.db.get_queries(tag=tag, date=date)
-
-    def get_tags(self):
-        return self.db.get_tags()
-
-    def plot_data(self):
-        dataset = {}
-        tags = self.get_tags()
-        for tag in tags:
-            data_list = self.db.get_queries(tag=tag)
-            data_list = sorted(data_list, key=lambda x: datetime.strptime(x[2], '%H:%M:%S'))
-            dataset[tag] = data_list
-        self.plt.gen_graph(dataset)
+from habitcracker import HabitTracker
 
 
 def main():
     ht = HabitTracker()
     while True:
-        usr_choice = input('Display Data(D) | Update Data(U) | Generate Graph(G) | Or EXIT: ').lower()
+        usr_choice = input(
+            'Display Data(D) | Update Data(U) | Generate Graph(G) | Or EXIT: '
+        ).lower()
         if usr_choice == 'd':
             for line in ht.get_queries():
                 print(line)

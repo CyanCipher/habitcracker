@@ -35,7 +35,7 @@ class DataBase:
 
     def parse_data(self, data):
         if not data or len(data) < 1:
-            raise ValueError('empty dataset provided to the database')
+            return None
         result = []
         for chunk in data:
             chunk_data = {
@@ -48,16 +48,18 @@ class DataBase:
             result.append(chunk_data)
         return tuple(result)
 
-    def update(self, data):
+    def update(self, data: list[list[str]]) -> int | None:
         clean_data = self.parse_data(data)
         if not clean_data:
-            return None
+            return 1
 
         self.cursor.executemany(
-            'INSERT INTO timelog VALUES(:date, :tag, :start, :stop, :total)', clean_data)
+            'INSERT INTO timelog VALUES(:date, :tag, :start, :stop, :total)',
+            clean_data)
         self.db.commit()
+        return None
 
-    def get_last_query(self):
+    def get_last_entry(self):
         entries = self.get_queries()
         if entries:
             return entries[-1]
@@ -66,4 +68,7 @@ class DataBase:
     def get_tags(self):
         self.cursor.execute('SELECT tag FROM timelog')
         tags = set(self.cursor.fetchall())
-        return [tag_tuple[0] for tag_tuple in tags]
+        if tags:
+            return [tag_tuple[0] for tag_tuple in tags]
+        else:
+            return None
